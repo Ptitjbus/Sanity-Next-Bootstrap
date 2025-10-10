@@ -1,19 +1,13 @@
-.github/**
-
-# Generated files
-package-lock.json
-**/package-lock.json
-yarn.lock
-**/yarn.lock
-pnpm-lock.yaml
-**/pnpm-lock.yaml
-
-# Build outputs
-dist/
-build/
-out/
-.next/
-
-# Other generated files
-*.min.js
-*.min.css
+# Ignore artifacts:
+build
+coverage
+packages
+node_modules
+.next
+.sanity
+.vercel
+.env
+.env.*
+!.env.example
+.DS_Store
+*.pem

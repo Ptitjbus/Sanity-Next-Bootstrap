@@ -1,0 +1,26 @@
+import type {GetStaticProps} from 'next'
+
+const {{pascalCase name}} = ({title}) => {
+	return (
+		<>
+			<h1>{title}</h1>
+		</>
+	)
+};
+
+export const getStaticProps: GetStaticProps = async ({params, preview = false, locale, locales, defaultLocale}) => {
+	const {setLocale, getDocumentById} = require('lib/cms')
+	const {pageRevalidate} = require('utils/cache')
+
+	setLocale(locale, defaultLocale, locales)
+
+	// TODO fetch data from the API
+	const props = await getDocumentById('page{{pascalCase name}}', {fields: /* groq */``})
+
+	return {
+		props: {...props, preview},
+		revalidate: pageRevalidate,
+	}
+}
+
+export default {{pascalCase name}}

@@ -1,11 +1,11 @@
 import { defineField, defineType } from 'sanity'
-import { TextIcon } from '@sanity/icons'
+import { BlockElementIcon } from '@sanity/icons'
 
-export const infoSection = defineType({
-    name: 'infoSection',
-    title: 'Info Section',
+export const {{camelCase name}} = defineType({
+    name: '{{camelCase name}}',
+    title: '{{pascalCase name}}',
     type: 'object',
-    icon: TextIcon,
+    icon: BlockElementIcon,
     fields: [
         defineField({
             name: 'heading',
@@ -30,9 +30,10 @@ export const infoSection = defineType({
         },
         prepare({ title }) {
             return {
-                title: title || 'Untitled Info Section',
-                subtitle: 'Info Section',
+                title: title || 'Untitled {{pascalCase name}}',
+                subtitle: '{{pascalCase name}}',
             }
         },
     },
 })
+
