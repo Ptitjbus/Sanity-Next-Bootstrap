@@ -2,6 +2,7 @@ import { CogIcon } from '@sanity/icons'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 import * as demo from '../../lib/initialValues'
+import { pageBuilderBlocks } from '../objects'
 
 /**
  * Settings schema Singleton.  Singletons are single documents that are displayed not in a collection, handy for things like site settings and other global configurations.
@@ -201,7 +202,7 @@ export const settings = defineType({
             name: 'pageBuilder',
             title: 'Page builder',
             type: 'array',
-            of: [{ type: 'callToAction' }, { type: 'infoSection' }],
+            of: [...pageBuilderBlocks],
             options: {
                 insertMenu: {
                     // Configure the "Add Item" menu to display a thumbnail preview of the content type. https://www.sanity.io/docs/array-type#efb1fe03459d

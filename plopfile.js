@@ -70,22 +70,41 @@ module.exports = (plop) => {
                         'packages/config/plop-templates/sanity-schema.ts.hbs',
                 })
 
-                // 2b. Ajouter l'import dans index.ts
+                // 2b. Ajouter l'import dans objects/index.ts
+                actions.push({
+                    type: 'modify',
+                    path: 'studio/src/schemaTypes/objects/index.ts',
+                    pattern:
+                        /(import { \w+ } from '\.\/.+'\n)(\nexport const pageBuilderBlocks)/,
+                    template:
+                        "$1import { {{camelCase name}} } from './{{camelCase name}}'\n$2",
+                })
+
+                // 2c. Ajouter le bloc dans pageBuilderBlocks
+                actions.push({
+                    type: 'modify',
+                    path: 'studio/src/schemaTypes/objects/index.ts',
+                    pattern: /(export const pageBuilderBlocks = \[[\s\S]*?)(])/,
+                    template:
+                        '$1    defineArrayMember({ type: {{camelCase name}}.name }),\n$2',
+                })
+
+                // 2d. Ajouter l'import dans index.ts
                 actions.push({
                     type: 'modify',
                     path: 'studio/src/schemaTypes/index.ts',
                     pattern:
-                        /(import { infoSection } from '\.\/objects\/infoSection')/gi,
+                        /(import { blockContent } from '\.\/objects\/blockContent'\n)(\n\/\/ Export an array)/,
                     template:
-                        "$1\nimport { {{camelCase name}} } from './objects/{{camelCase name}}'",
+                        "$1import { {{camelCase name}} } from './objects/{{camelCase name}}'\n$2",
                 })
 
-                // 2c. Ajouter le schéma dans l'export schemaTypes
+                // 2e. Ajouter le schéma dans l'export schemaTypes
                 actions.push({
                     type: 'modify',
                     path: 'studio/src/schemaTypes/index.ts',
-                    pattern: /(infoSection,)/gi,
-                    template: '$1\n    {{camelCase name}},',
+                    pattern: /(\/\/ Objects[\s\S]*?)(link,)/,
+                    template: '$1{{camelCase name}},\n    $2',
                 })
             }
 
@@ -95,18 +114,18 @@ module.exports = (plop) => {
                     type: 'modify',
                     path: 'frontend/app/components/BlockRenderer.tsx',
                     pattern:
-                        /(import Info from '@\/app\/components\/InfoSection')/gi,
+                        /(import \w+ from '@\/app\/components\/\w+'\n)(import { dataAttr })/,
                     template:
-                        "$1\nimport {{pascalCase name}} from '@/app/components/{{pascalCase name}}'",
+                        "$1import {{pascalCase name}} from '@/app/components/{{pascalCase name}}'\n$2",
                 })
 
                 // 4. Ajouter le composant à l'objet Blocks
                 actions.push({
                     type: 'modify',
                     path: 'frontend/app/components/BlockRenderer.tsx',
-                    pattern: /(const Blocks: BlocksType = {)/gi,
+                    pattern: /(const Blocks: BlocksType = {[\s\S]*?)(})/,
                     template:
-                        '$1\n    {{camelCase schemaType}}: {{pascalCase name}},',
+                        '$1    {{camelCase schemaType}}: {{pascalCase name}},\n$2',
                 })
             }
 
