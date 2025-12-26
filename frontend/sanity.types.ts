@@ -13,14 +13,6 @@
  */
 
 // Source: schema.json
-export type CallToAction = {
-    _type: 'callToAction'
-    heading?: string
-    text?: string
-    buttonText?: string
-    link?: Link
-}
-
 export type Link = {
     _type: 'link'
     linkType?: 'href' | 'page' | 'post'
@@ -40,96 +32,33 @@ export type Link = {
     openInNewTab?: boolean
 }
 
+export type Features = {
+    _type: 'features'
+    heading?: string
+    subheading?: string
+    content?: BlockContent
+}
+
+export type CallToAction = {
+    _type: 'callToAction'
+    heading?: string
+    text?: string
+    buttonText?: string
+    link?: Link
+}
+
 export type Hero = {
     _type: 'hero'
     heading?: string
     subheading?: string
-    content?: Array<{
-        children?: Array<{
-            marks?: Array<string>
-            text?: string
-            _type: 'span'
-            _key: string
-        }>
-        style?:
-            | 'normal'
-            | 'h1'
-            | 'h2'
-            | 'h3'
-            | 'h4'
-            | 'h5'
-            | 'h6'
-            | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-            linkType?: 'href' | 'page' | 'post'
-            href?: string
-            page?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'page'
-            }
-            post?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'post'
-            }
-            openInNewTab?: boolean
-            _type: 'link'
-            _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-    }>
+    content?: BlockContent
 }
 
 export type InfoSection = {
     _type: 'infoSection'
     heading?: string
     subheading?: string
-    content?: Array<{
-        children?: Array<{
-            marks?: Array<string>
-            text?: string
-            _type: 'span'
-            _key: string
-        }>
-        style?:
-            | 'normal'
-            | 'h1'
-            | 'h2'
-            | 'h3'
-            | 'h4'
-            | 'h5'
-            | 'h6'
-            | 'blockquote'
-        listItem?: 'bullet' | 'number'
-        markDefs?: Array<{
-            linkType?: 'href' | 'page' | 'post'
-            href?: string
-            page?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'page'
-            }
-            post?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'post'
-            }
-            openInNewTab?: boolean
-            _type: 'link'
-            _key: string
-        }>
-        level?: number
-        _type: 'block'
-        _key: string
-    }>
+    content?: BlockContent
 }
 
 export type BlockContent = Array<{
@@ -228,7 +157,26 @@ export type Settings = {
         | ({
               _key: string
           } & InfoSection)
+        | ({
+              _key: string
+          } & Features)
     >
+}
+
+export type SanityImageCrop = {
+    _type: 'sanity.imageCrop'
+    top?: number
+    bottom?: number
+    left?: number
+    right?: number
+}
+
+export type SanityImageHotspot = {
+    _type: 'sanity.imageHotspot'
+    x?: number
+    y?: number
+    height?: number
+    width?: number
 }
 
 export type Page = {
@@ -251,6 +199,9 @@ export type Page = {
         | ({
               _key: string
           } & InfoSection)
+        | ({
+              _key: string
+          } & Features)
     >
 }
 
@@ -307,6 +258,21 @@ export type Person = {
         alt?: string
         _type: 'image'
     }
+}
+
+export type Slug = {
+    _type: 'slug'
+    current?: string
+    source?: string
+}
+
+export type MediaTag = {
+    _id: string
+    _type: 'media.tag'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name?: Slug
 }
 
 export type SanityAssistInstructionTask = {
@@ -470,20 +436,15 @@ export type SanityImageDimensions = {
     aspectRatio?: number
 }
 
-export type SanityImageHotspot = {
-    _type: 'sanity.imageHotspot'
-    x?: number
-    y?: number
-    height?: number
-    width?: number
-}
-
-export type SanityImageCrop = {
-    _type: 'sanity.imageCrop'
-    top?: number
-    bottom?: number
-    left?: number
-    right?: number
+export type SanityImageMetadata = {
+    _type: 'sanity.imageMetadata'
+    location?: Geopoint
+    dimensions?: SanityImageDimensions
+    palette?: SanityImagePalette
+    lqip?: string
+    blurHash?: string
+    hasAlpha?: boolean
+    isOpaque?: boolean
 }
 
 export type SanityFileAsset = {
@@ -506,6 +467,13 @@ export type SanityFileAsset = {
     path?: string
     url?: string
     source?: SanityAssetSourceData
+}
+
+export type SanityAssetSourceData = {
+    _type: 'sanity.assetSourceData'
+    name?: string
+    id?: string
+    url?: string
 }
 
 export type SanityImageAsset = {
@@ -531,17 +499,6 @@ export type SanityImageAsset = {
     source?: SanityAssetSourceData
 }
 
-export type SanityImageMetadata = {
-    _type: 'sanity.imageMetadata'
-    location?: Geopoint
-    dimensions?: SanityImageDimensions
-    palette?: SanityImagePalette
-    lqip?: string
-    blurHash?: string
-    hasAlpha?: boolean
-    isOpaque?: boolean
-}
-
 export type Geopoint = {
     _type: 'geopoint'
     lat?: number
@@ -549,29 +506,21 @@ export type Geopoint = {
     alt?: number
 }
 
-export type Slug = {
-    _type: 'slug'
-    current?: string
-    source?: string
-}
-
-export type SanityAssetSourceData = {
-    _type: 'sanity.assetSourceData'
-    name?: string
-    id?: string
-    url?: string
-}
-
 export type AllSanitySchemaTypes =
-    | CallToAction
     | Link
+    | Features
+    | CallToAction
     | Hero
     | InfoSection
     | BlockContent
     | Settings
+    | SanityImageCrop
+    | SanityImageHotspot
     | Page
     | Post
     | Person
+    | Slug
+    | MediaTag
     | SanityAssistInstructionTask
     | SanityAssistTaskStatus
     | SanityAssistSchemaTypeAnnotations
@@ -587,14 +536,11 @@ export type AllSanitySchemaTypes =
     | SanityImagePaletteSwatch
     | SanityImagePalette
     | SanityImageDimensions
-    | SanityImageHotspot
-    | SanityImageCrop
-    | SanityFileAsset
-    | SanityImageAsset
     | SanityImageMetadata
-    | Geopoint
-    | Slug
+    | SanityFileAsset
     | SanityAssetSourceData
+    | SanityImageAsset
+    | Geopoint
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -658,6 +604,9 @@ export type SettingsQueryResult = {
           } & CallToAction)
         | ({
               _key: string
+          } & Features)
+        | ({
+              _key: string
           } & Hero)
         | ({
               _key: string
@@ -691,49 +640,17 @@ export type GetPageQueryResult = {
           }
         | {
               _key: string
+              _type: 'features'
+              heading?: string
+              subheading?: string
+              content?: BlockContent
+          }
+        | {
+              _key: string
               _type: 'hero'
               heading?: string
               subheading?: string
-              content?: Array<{
-                  children?: Array<{
-                      marks?: Array<string>
-                      text?: string
-                      _type: 'span'
-                      _key: string
-                  }>
-                  style?:
-                      | 'blockquote'
-                      | 'h1'
-                      | 'h2'
-                      | 'h3'
-                      | 'h4'
-                      | 'h5'
-                      | 'h6'
-                      | 'normal'
-                  listItem?: 'bullet' | 'number'
-                  markDefs?: Array<{
-                      linkType?: 'href' | 'page' | 'post'
-                      href?: string
-                      page?: {
-                          _ref: string
-                          _type: 'reference'
-                          _weak?: boolean
-                          [internalGroqTypeReferenceTo]?: 'page'
-                      }
-                      post?: {
-                          _ref: string
-                          _type: 'reference'
-                          _weak?: boolean
-                          [internalGroqTypeReferenceTo]?: 'post'
-                      }
-                      openInNewTab?: boolean
-                      _type: 'link'
-                      _key: string
-                  }>
-                  level?: number
-                  _type: 'block'
-                  _key: string
-              }>
+              content?: BlockContent
           }
         | {
               _key: string

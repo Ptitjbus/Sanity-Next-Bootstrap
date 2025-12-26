@@ -5,9 +5,10 @@
 
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
-import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './src/schemaTypes'
 import { structure } from './src/structure'
+import { media } from 'sanity-plugin-media'
+import {visionTool} from '@sanity/vision'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import {
     presentationTool,
@@ -126,6 +127,7 @@ export default defineConfig({
         // Additional plugins for enhanced functionality
         unsplashImageAsset(),
         assist(),
+        media(),
         visionTool(),
     ],
 
