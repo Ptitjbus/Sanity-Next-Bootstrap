@@ -25,7 +25,8 @@
         "lint": "npm run lint --workspace=frontend",
         "type-check": "npm run type-check --workspaces",
         "block:add": "plop & cd studio && npx sanity schema extract && cd ../frontend && npx sanity typegen generate",
-        "generate": "cd studio && npx sanity schema extract && cd ../frontend && npx sanity typegen generate"
+        "generate": "cd studio && npx sanity schema extract && cd ../frontend && npx sanity typegen generate",
+        "deploy": "cd studio && npx sanity deploy"
     },
     "devDependencies": {
         "npm-run-all2": "^5.0.2",
